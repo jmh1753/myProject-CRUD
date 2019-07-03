@@ -41,7 +41,7 @@
                 <tbody>
                     <tr v-for="item in boardlist" v-bind:key="item">
                         <td>{{item.id}}</td>
-                        <td @click="detail">{{item.title}}</td>
+                        <td @click="detail(item)" style="color:red">{{item.title}}</td>
                         <td>{{item.userid}}</td>
                         <td>{{item.regdate}}</td>
                         <td>{{item.view}}</td>                    
@@ -77,7 +77,7 @@ export default {
             boardlist : []
         }
     },
-    
+
     components:{
         headerComponent,
         copyright,
@@ -85,9 +85,16 @@ export default {
     },
 
     methods:{
-        detail(){
+        detail(item){
             alert("디테일화면으로")
-                       
+            store.state.id = item.id;
+            store.state.userid = item.userid;
+            store.state.title = item.title;
+            store.state.content = item.content;
+            store.state.regdate = item.regdate;
+            store.state.view = item.view;
+            alert(store.state.title);
+            this.$router.push('/freeboarddetail')
         }
     },
 
@@ -95,7 +102,7 @@ export default {
         axios.get(`${this.context}/list`).then((response)=>{
              console.log(response);
             this.boardlist = response.data;
-            alert(this.boardlist)
+         
         })
     }
     

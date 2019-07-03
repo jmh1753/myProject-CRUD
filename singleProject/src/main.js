@@ -6,7 +6,7 @@ import router from './router'
 import 'bootstrap';
 import 'bootstrap/js/dist/util';
 import 'bootstrap/js/dist/alert';
-import store from './store'
+import {store} from './store'
 
 Vue.config.productionTip = false
 
