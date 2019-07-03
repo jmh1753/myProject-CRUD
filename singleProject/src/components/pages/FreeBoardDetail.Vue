@@ -39,7 +39,7 @@
                 <td style="width:85%"><router-link to="/updatefreeboard">수정</router-link> | <span class="link" @click="deleteboard">삭제</span></td> 
             </tr>
             <tr>
-                <td colspan="2">
+                <td class="content" colspan="2">
                     {{this.$store.state.content}}
                 <br><br>
                 </td>

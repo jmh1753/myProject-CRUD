@@ -30,7 +30,7 @@
 
 
     <div class="container">
-        <form @submit.prevent="insertgo">
+        <form>
         <table class="table">
                 <tr>
                     <td style="width:85%">
@@ -77,6 +77,9 @@ export default {
     data(){
         return{
             context : 'http://localhost:9000/board',
+            title:"",
+            userid:"",
+            content:"",
         }
     },
     components:{
@@ -97,12 +100,14 @@ export default {
             'Content-Type': 'application/json',
             'Authorization' : 'JWT fefege..'
             }
+            
             alert(data.title)
             alert(data.content)
             //alert(this.customerId)
             axios.post(`${this.context}`, JSON.stringify(data), {headers:headers})
                     .then(res=>{
-                        alert(`insert성공 : ${res.result}`)
+                        console.log(res)
+                        alert(`insert성공 : ${res.data.result}`)
                         this.$router.push("/freeboard")
                     })
                     .catch(e=>{

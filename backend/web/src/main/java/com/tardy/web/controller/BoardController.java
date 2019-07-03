@@ -49,18 +49,23 @@ public class BoardController {
         Date time = new Date();
         String time1 = format1.format(time);
 
-
-
         Board entity = new Board();
         entity.setUserid(dto.getUserid());
         entity.setTitle(dto.getTitle());
         entity.setContent(dto.getContent());
-        entity.setView("100");
+        entity.setView("0");
         entity.setRegdate(time1);
 
         System.out.println("엔티티로 바뀐 정보 : " + entity.toString());
-        repo.save(entity);
-        map.put("result", "게시글등록 성공");
+        Board board = repo.save(entity);
+        System.out.println(board);
+        if(board != null){
+            map.put("result", "게시글등록 성공");
+        }else{
+            map.put("result", "게시글등록 실패");
+        }
+        System.out.println(map);
+
         return map;
     }
 

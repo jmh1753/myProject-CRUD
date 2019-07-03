@@ -39,7 +39,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in boardlist" v-bind:key="item">
+                    <tr v-for="item in boardlist" v-bind:key="item.id">
                         <td>{{item.id}}</td>
                         <td @click="detail(item)" style="color:red">{{item.title}}</td>
                         <td>{{item.userid}}</td>
@@ -68,7 +68,7 @@ import headerComponent from "../common/HeaderComponent"
 import copyright from "../common/copyright"
 import movetop from "../common/movetop"
 import axios from 'axios'
-import {store} from '../../store'
+import {store} from '@/store/index'
 
 export default {
     data(){
@@ -100,11 +100,12 @@ export default {
 
     created(){
         axios.get(`${this.context}/list`).then((response)=>{
-             console.log(response);
             this.boardlist = response.data;
          
         })
+       
     }
+    
     
 }
 </script>
