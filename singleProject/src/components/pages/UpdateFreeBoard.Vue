@@ -51,8 +51,8 @@
                </td>             
             </tr> 
         </table>
-        <router-link class="btn btn-outline-secondary btn-sm" to="/freeboarddetail" style="float:right">수정완료</router-link>  
-        <input type="submit" style="float:right" class="btn btn-outline-secondary btn-sm" value="진짜수정완료" @click="updatego">
+        <!-- <router-link class="btn btn-outline-secondary btn-sm" to="/freeboarddetail" style="float:right">수정완료</router-link>   -->
+        <input type="button" style="float:right" class="btn btn-outline-secondary btn-sm" value="진짜수정완료" @click="updatego">
     </div>
 
     <br><br><br><br><br><br><br><br><br>
@@ -64,11 +64,13 @@
 import headerComponent from "../common/HeaderComponent"
 import copyright from "../common/copyright"
 import movetop from "../common/movetop"
+import axios from 'axios'
 import {store} from '../../store'
 
 export default {
     data(){
         return{
+            context : 'http://localhost:9000/board',
             title : store.state.userid,
             content : store.state.content
         }
@@ -84,23 +86,32 @@ export default {
             alert("게시글수정버튼 클릭")
             let data = {
                 title: this.title,
-                content: this.content,              
+                content: this.content,                              
             }
             let headers = {
             'Content-Type': 'application/json',
             'Authorization' : 'JWT fefege..'
             }
-            alert(data.title)
-            alert(data.content)
-            axios.put(`${this.context}`, JSON.stringify(data), {headers:headers})
+            alert("id: "+this.$store.state.id)
+            alert("updatego title: "+data.title)
+            alert("updatego content: "+data.content)
+           
+            axios.put(`${this.context}/${this.$store.state.id}`, JSON.stringify(data), {headers:headers})
                     .then(res=>{
-                        alert(`insert성공 : ${res.result}`)
+                        alert(`update성공 : ${res.result}`)
                         this.$router.push("/freeboard")
+                        // this.$router.link(-1);
                     })
                     .catch(e=>{
                         alert('에러')
                     })
         }
+
+
+
+        
+
+
     }
 }
 </script>

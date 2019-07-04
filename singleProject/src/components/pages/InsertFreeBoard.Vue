@@ -112,6 +112,7 @@ export default {
                     })
                     .catch(e=>{
                         alert('에러')
+                        this.$router.link(-1)
                     })
         }
 
