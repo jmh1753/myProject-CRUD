@@ -90,7 +90,6 @@ export default {
     methods:{
         insertgo(e){
             e.preventDefault();
-            alert("게시글작성완료버튼 클릭")
             let data = {
                 title: this.title,
                 content: this.content,
@@ -101,14 +100,12 @@ export default {
             'Authorization' : 'JWT fefege..'
             }
             
-            alert(data.title)
-            alert(data.content)
             //alert(this.customerId)
-            axios.post(`${this.context}`, JSON.stringify(data), {headers:headers})
+            axios.post(`${this.context}`, JSON.stringify(data), {headers:headers})      
                     .then(res=>{
-                        console.log(res)
-                        alert(`insert성공 : ${res.data.result}`)
-                        this.$router.push("/freeboard")
+                        alert(` ${res.data.result}`)
+                        // alert('테스트')
+                        this.$router.push("/")
                     })
                     .catch(e=>{
                         alert('에러')

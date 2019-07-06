@@ -18,6 +18,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,31 +43,37 @@ public class BoardController {
         return new ModelMapper();
     }
 
-    //1. 게시판글쓰기 먼저 
+    //1. 게시판글쓰기
     @PostMapping("")
     public HashMap<String,String> insertBoard(@RequestBody BoardDTO dto) {
+        System.out.println(dto.getUserid());
         HashMap<String, String> map = new HashMap<>();
-        System.out.println("insertBoard : " + dto.toString());
-        SimpleDateFormat format1 = new SimpleDateFormat();
-        Date time = new Date();
-        String time1 = format1.format(time);
-
-        Board entity = new Board();
-        entity.setUserid(dto.getUserid());
-        entity.setTitle(dto.getTitle());
-        entity.setContent(dto.getContent());
-        entity.setView("0");
-        entity.setRegdate(time1);
-
-        System.out.println("엔티티로 바뀐 정보 : " + entity.toString());
-        Board board = repo.save(entity);
-        System.out.println(board);
-        if(board != null){
-            map.put("result", "게시글등록 성공");
+        Board test = repo.findByUserid(dto.getUserid());
+        System.out.println(test);
+         if(test != null){  
+            map.put("result","이미 있는 아이디입니다");
         }else{
-            map.put("result", "게시글등록 실패");
+            System.out.println("insertBoard : " + dto.toString());
+            SimpleDateFormat format1 = new SimpleDateFormat();
+            Date time = new Date();
+            String time1 = format1.format(time);
+    
+            Board entity = new Board();
+            entity.setUserid(dto.getUserid());
+            entity.setTitle(dto.getTitle());
+            entity.setContent(dto.getContent());
+            entity.setView("0");
+            entity.setRegdate(time1);
+    
+            System.out.println("엔티티로 바뀐 정보 : " + entity.toString());
+            Board board = repo.save(entity);
+            System.out.println(board);
+            
+            map.put("result", "게시글등록 성공");           
+            System.out.println(map);
         }
-        System.out.println(map);
+      
+     
 
         return map;
     }
@@ -88,7 +95,7 @@ public class BoardController {
     }
 
 
-    //3. 게시판 수정
+    //3. 게시글 수정
     @PutMapping("/{id}")
     public HashMap<String, String> updateList(@PathVariable String id, @RequestBody BoardDTO dto) {
         System.out.println("update컨트롤러로 옴");
@@ -108,50 +115,16 @@ public class BoardController {
         return map;
     }
 
-    // public void updateList(@PathVariable String id, @RequestBody BoardDTO dto) {
-    //     System.out.println("update컨트롤러로 옴");
-    //     System.out.println("id : " + id);
-    //     System.out.println("dto : " + dto);
-        
-    //     // Board entity = repo.findById(Long.parseLong(id)).get();
-    //     // entity.setTitle(dto.getTitle());
-    //     // entity.setContent(dto.getContent());
-       
-    //     // repo.save(entity);
 
-    //     // HashMap map = new HashMap<>();
-    //     // map.put("result", "SUCCESS");
-    //     // return map;
-    // }
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-    //3. 게시판 수정2
-    @GetMapping("/update")
-    public HashMap<String, String> updateList2(@RequestBody BoardDTO dto) {
-        System.out.println("update컨트롤러로 옴");
-        System.out.println("dto : " + dto);
-        
-        Board entity = repo.findById(Long.parseLong(dto.getId())).get();
-        entity.setTitle(dto.getTitle());
-        entity.setContent(dto.getContent());
-       
-        repo.save(entity);
-
-        HashMap map = new HashMap<>();
-        map.put("result", "SUCCESS");
-        return map;
+    //4. 게시글 삭제
+    @DeleteMapping("/{id}")
+    public void deleteList(@PathVariable String id){
+        System.out.println("asdfasdf");
+        System.out.println("id : " + id);
+        repo.deleteById(Long.parseLong(id));
     }
+
+
+
     
 }

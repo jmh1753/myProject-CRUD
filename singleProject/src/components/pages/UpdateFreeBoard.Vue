@@ -30,17 +30,23 @@
     <div class="container">
        <table class="table">
             <tr>
-                <td style="width:85%">
+                <td>
+                    <strong>title</strong>
+                </td>
+                <td style="width:95%">
                    <textarea class="form-control" rows="1" cols="80" name="title" style="overflow:hidden" v-model="title">
                    </textarea>
                 </td>  
-                <td style="width:15%">{{this.$store.state.regdate}}</td>                                       
+                                                      
             </tr>
             <tr>
                 <td style="width:100%" colspan="2"><i class="fas fa-user-circle"></i> {{this.$store.state.userid}}</td>    
             </tr>
             <tr>
-                <td colspan="2">
+                <td>
+                    <strong>content</strong>
+                </td>
+                <td style="width:95%">
                    <textarea class="form-control" rows="14" cols="150" name="content" v-model="content">
                    </textarea> 
                 </td>
@@ -51,8 +57,7 @@
                </td>             
             </tr> 
         </table>
-        <!-- <router-link class="btn btn-outline-secondary btn-sm" to="/freeboarddetail" style="float:right">수정완료</router-link>   -->
-        <input type="button" style="float:right" class="btn btn-outline-secondary btn-sm" value="진짜수정완료" @click="updatego">
+        <input type="button" style="float:right" class="btn btn-outline-secondary btn-sm" value="수정완료" @click="updatego">
     </div>
 
     <br><br><br><br><br><br><br><br><br>
@@ -71,7 +76,7 @@ export default {
     data(){
         return{
             context : 'http://localhost:9000/board',
-            title : store.state.userid,
+            title : store.state.title,
             content : store.state.content
         }
     },
@@ -83,34 +88,24 @@ export default {
     methods:{
         updatego(e){
             e.preventDefault();
-            alert("게시글수정버튼 클릭")
             let data = {
                 title: this.title,
-                content: this.content,                              
+                content: this.content,                            
             }
             let headers = {
             'Content-Type': 'application/json',
             'Authorization' : 'JWT fefege..'
-            }
-            alert("id: "+this.$store.state.id)
-            alert("updatego title: "+data.title)
-            alert("updatego content: "+data.content)
-           
+            }          
             axios.put(`${this.context}/${this.$store.state.id}`, JSON.stringify(data), {headers:headers})
                     .then(res=>{
-                        alert(`update성공 : ${res.result}`)
-                        this.$router.push("/freeboard")
+                        this.$router.push("/")
                         // this.$router.link(-1);
                     })
                     .catch(e=>{
                         alert('에러')
                     })
         }
-
-
-
-        
-
+       
 
     }
 }

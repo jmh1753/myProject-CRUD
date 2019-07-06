@@ -41,7 +41,7 @@
                 <tbody>
                     <tr v-for="item in boardlist" v-bind:key="item.id">
                         <td>{{item.id}}</td>
-                        <td @click="detail(item)" style="color:red">{{item.title}}</td>
+                        <td @click="detail(item)" style="color:red; cursor:pointer;">{{item.title}}</td>
                         <td>{{item.userid}}</td>
                         <td>{{item.regdate}}</td>
                         <td>{{item.view}}</td>                    
@@ -86,14 +86,12 @@ export default {
 
     methods:{
         detail(item){
-            alert("디테일화면으로")
             store.state.id = item.id;
             store.state.userid = item.userid;
             store.state.title = item.title;
             store.state.content = item.content;
             store.state.regdate = item.regdate;
             store.state.view = item.view;
-            alert(store.state.title);
             this.$router.push('/freeboarddetail')
         }
     },

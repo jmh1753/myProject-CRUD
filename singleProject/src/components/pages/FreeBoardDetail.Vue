@@ -31,7 +31,7 @@
     <div class="container">    
         <table class="table">
             <tr>
-                <td style="width:85%">{{this.$store.state.title}} | freeBoard</td>  
+                <td style="width:85%"><span style="color:red">{{this.$store.state.title}}</span>  &emsp;| freeBoard</td>  
                 <td style="width:15%">{{this.$store.state.regdate}}</td>                                       
             </tr>
             <tr>
@@ -63,11 +63,12 @@ import headerComponent from "../common/HeaderComponent"
 import copyright from "../common/copyright"
 import movetop from "../common/movetop"
 import {store} from '../../store'
+import axios from 'axios'
 
 export default {
     data(){
         return{
-           
+           context : 'http://localhost:9000/board'
         }
     },
     components:{
@@ -75,19 +76,19 @@ export default {
         copyright,
         movetop
     },
-    methods:{
-        title(){
-            alert(store.state.title);
-        },
-        deleteboard(){
-            var con = confirm("정말 삭제하시겠습니까?")
-            if(con){
-                alert("정말삭제")
+    methods:{    
+        deleteboard(){                  
+              axios.delete(`${this.context}/${this.$store.state.id}`)
+                    .then(res=>{
+                        this.$router.push("/")                    
+                    })
+                    .catch(e=>{
+                        alert('에러')
+                    })
 
-            }else{
-                alert("삭제취소")
             }
-        }
+            
+        
     }
 }
 </script>
