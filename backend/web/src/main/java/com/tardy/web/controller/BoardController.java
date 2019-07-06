@@ -46,34 +46,23 @@ public class BoardController {
     //1. 게시판글쓰기
     @PostMapping("")
     public HashMap<String,String> insertBoard(@RequestBody BoardDTO dto) {
-        System.out.println(dto.getUserid());
         HashMap<String, String> map = new HashMap<>();
-        Board test = repo.findByUserid(dto.getUserid());
-        System.out.println(test);
-         if(test != null){  
-            map.put("result","이미 있는 아이디입니다");
-        }else{
-            System.out.println("insertBoard : " + dto.toString());
-            SimpleDateFormat format1 = new SimpleDateFormat();
-            Date time = new Date();
-            String time1 = format1.format(time);
-    
-            Board entity = new Board();
-            entity.setUserid(dto.getUserid());
-            entity.setTitle(dto.getTitle());
-            entity.setContent(dto.getContent());
-            entity.setView("0");
-            entity.setRegdate(time1);
-    
-            System.out.println("엔티티로 바뀐 정보 : " + entity.toString());
-            Board board = repo.save(entity);
-            System.out.println(board);
-            
-            map.put("result", "게시글등록 성공");           
-            System.out.println(map);
-        }
-      
-     
+
+        SimpleDateFormat format1 = new SimpleDateFormat();
+        Date time = new Date();
+        String time1 = format1.format(time);
+
+        Board entity = new Board();
+        entity.setUserid(dto.getUserid());
+        entity.setTitle(dto.getTitle());
+        entity.setContent(dto.getContent());
+        entity.setRegdate(time1);
+
+        Board board = repo.save(entity);
+        System.out.println(board);
+        
+        map.put("result", "게시글등록 성공");           
+        System.out.println(map);
 
         return map;
     }
@@ -82,28 +71,20 @@ public class BoardController {
     //2. 게시판 리스트 출력하기
     @GetMapping("/list")
     public List<BoardDTO> selectList(){
-        System.out.println("리스트 출력 메소드");
         Iterable<Board> board = repo.findAll();
         List<BoardDTO> list = new ArrayList<>();
         for (Board s : board){
             BoardDTO bo = modelMapper.map(s, BoardDTO.class);
-            System.out.println("index"+bo.getId());
             list.add(bo);
         }
-        System.out.println(list);
         return list;
     }
 
 
     //3. 게시글 수정
     @PutMapping("/{id}")
-    public HashMap<String, String> updateList(@PathVariable String id, @RequestBody BoardDTO dto) {
-        System.out.println("update컨트롤러로 옴");
-        System.out.println("id : " + id);
-        System.out.println("dto : " + dto);
-        
+    public HashMap<String, String> updateList(@PathVariable String id, @RequestBody BoardDTO dto) {       
         Board entity = repo.findById(Long.parseLong(id)).get();
-        System.out.println("레포에서온 엔티티 : "+entity);
         entity.setTitle(dto.getTitle());
         entity.setContent(dto.getContent());
        
@@ -119,8 +100,6 @@ public class BoardController {
     //4. 게시글 삭제
     @DeleteMapping("/{id}")
     public void deleteList(@PathVariable String id){
-        System.out.println("asdfasdf");
-        System.out.println("id : " + id);
         repo.deleteById(Long.parseLong(id));
     }
 

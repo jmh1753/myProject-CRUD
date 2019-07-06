@@ -10,8 +10,7 @@ export const store = new Vuex.Store({
         userid : '',
         title : '',
         content : '',
-        regdate : '',
-        view : ''
+        regdate : ''
     },
     mutations : {
 

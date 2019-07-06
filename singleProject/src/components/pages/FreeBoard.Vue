@@ -1,18 +1,14 @@
 <template>
     <div>    
-        <!-- <컴포넌트></컴포넌트> -->
         <headerComponent></headerComponent>
     
-        <!-- inner-banner -->
         <section class="inner-banner" id="home">
             <div class="inner-layer">
                 <div class="container">
                 </div>
             </div>
         </section>
-        <!-- //inner-banner -->
 
-        <!-- breadcrumb -->
         <div class="breadcrumb-w3pvt">
             <div class="container">
             <nav aria-label="breadcrumb">
@@ -25,7 +21,6 @@
             </nav>
             </div>
         </div>
-        <!-- //breadcrumb -->
 
         <div class="container">
             <table class="table">
@@ -33,9 +28,8 @@
                     <tr>
                         <th style="width:10%">no</th>
                         <th style="width:50%">제목</th>
-                        <th style="width:15%">글쓴이</th>
-                        <th style="width:15%">작성일</th>
-                        <th style="width:10%">조회수</th>
+                        <th style="width:20%">글쓴이</th>
+                        <th style="width:20%">작성일</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,21 +37,16 @@
                         <td>{{item.id}}</td>
                         <td @click="detail(item)" style="color:red; cursor:pointer;">{{item.title}}</td>
                         <td>{{item.userid}}</td>
-                        <td>{{item.regdate}}</td>
-                        <td>{{item.view}}</td>                    
+                        <td>{{item.regdate}}</td>                  
                     </tr> 
                     
                 </tbody>
-            </table>
+            </table>            
+            <router-link class="btn btn-outline-secondary btn-sm" to="/insertfreeboard" id="btn1">글쓰기</router-link>
             
-            <router-link class="btn btn-outline-secondary btn-sm" to="/insertfreeboard">글쓰기</router-link>
-            
-
         </div>
 
-
-        
-        <br><br><br><br><br><br><br><br><br>
+  
         <copyright></copyright>      
         <movetop></movetop>
     </div>
@@ -91,15 +80,13 @@ export default {
             store.state.title = item.title;
             store.state.content = item.content;
             store.state.regdate = item.regdate;
-            store.state.view = item.view;
             this.$router.push('/freeboarddetail')
         }
     },
 
     created(){
         axios.get(`${this.context}/list`).then((response)=>{
-            this.boardlist = response.data;
-         
+            this.boardlist = response.data;       
         })
        
     }
@@ -111,7 +98,9 @@ export default {
 
 
 <style scoped>
-
+ 
+.container #btn1{float:right;  }
+.container:after{display:block; content:'';clear:both; }
 
 
 </style>

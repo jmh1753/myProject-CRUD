@@ -53,5 +53,5 @@ export default {
 </script>
 
 <style>
-
+.copy-right{margin-top: 270px}
 </style>

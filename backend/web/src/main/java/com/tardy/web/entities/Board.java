@@ -39,12 +39,6 @@ public class Board implements Serializable{
     @Column(name="title") private String title;
     @Column(name="content") private String content;
     @Column(name="regdate") private String regdate;
-    @Column(name="view") private String view;
-
-   /*  @Override
-    public String toString(){
-        return "FreeBoard : id:%d"+id+"userId:"+userId+"title:"+title+"content:"+content+"regdate:"+regdate+"view:"+view;
-    } */
 
     @Override
     public String toString(){
@@ -53,7 +47,6 @@ public class Board implements Serializable{
         +"TITLE: %s",title
         +"CONTENT: %s", content
         +"REGDATE: %s", regdate      
-        +"VIEW: %s", view
         );
     }
 
@@ -61,12 +54,11 @@ public class Board implements Serializable{
 
 
     @Builder
-    private Board(String userId, String title, String content, String regdate, String view){
+    private Board(String userId, String title, String content, String regdate){
         this.userid = userId;
         this.title = title;
         this.content = content;
         this.regdate = regdate;
-        this.view = view;
     }
 
     

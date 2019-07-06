@@ -10,6 +10,6 @@ import lombok.Data;
  */
 @Data @Component @Lazy
 public class BoardDTO {
-    private String id,userid, title, content, regdate, view;
+    private String id,userid, title, content, regdate;
     
 }

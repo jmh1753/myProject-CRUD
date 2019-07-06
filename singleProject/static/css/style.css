@@ -484,9 +484,7 @@ ul.list-w3 i {
 .copy-right ul.list-w3 {
     justify-content: flex-end;
 }
-.copy-right,.middle {
-    border-top: 1px dashed #636363;
-}
+ 
 /*-- //footer --*/
 
 /*-- advantages --*/
